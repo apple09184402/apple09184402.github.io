@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .post {
+            font-size: 24px;
+            padding: 10px;
+            max-height: 200px;
+            overflow: auto;
+            word-wrap: break-word;
+            white-space: normal;
+            
+        }
+
+        #displayPosts > p {
+            padding: 10px;
+            font-size: 18px;
+            border-top: 1px solid gray;
+            border-bottom: 1px solid gray;
+            
+        }
+
+        .post-form {
+            bottom: 0px;
+            margin-top: 20px;
+        }
+
+        textarea {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>野餐桌上的歷史討論區</h1>
+        <div id="displayPosts"></div> <!-- 顯示區 -->
+        <div class="post-form">
+            <textarea class="TextArea" id="nickname" placeholder="請輸入您的暱稱，限三十個中英文字（含空白）"></textarea>
+            <textarea class="TextArea" id="postContent" placeholder="請輸入您的留言"></textarea><br>
+            <button onclick="addPost()">發佈</button>
+        </div>
+    </div>
+
+    <script>
+        //宣告將內容發布的函式
+        function addPost() {
+            var postContent = document.getElementById("postContent").value; //取得textarea的內容
+            var NicknameContent = document.getElementById("nickname").value;//取得input的內容
+            
+
+            //trim()移除字串開頭與結尾的空白字元
+            //如果留言不等於空字串，且暱稱不等於空字串，且暱稱小於三十字，執行下列函式
+            if (postContent.trim() !== "" && NicknameContent.trim() !== "" && NicknameContent.length <= 30) {
+                var postsContainer = document.getElementById("displayPosts"); //將div(顯示區)放入變數postsContainer
+                                     
+                var NicknameElement = document.createElement("b");            //創立一個b元素(用戶輸入的暱稱)並放入變數NicknameElement                     
+                NicknameElement.className = "post";                           //將變數postElement裡的b元素(用戶輸入的內容)給予一個class名稱(CSS用) 
+                
+                var postElement = document.createElement("pre");              //創立一個pre元素(用戶輸入的內容)並放入變數postElement
+                postElement.className = "post";                               //將變數postElement裡的pre元素(用戶輸入的內容)給予一個class名稱(CSS用)
+
+                var NowDate = new Date();                                     //用變數NowDate取得系統日期
+                var StringDate = NowDate.toLocaleString();                    //將系統日期轉成字串
+                var DateElement = document.createElement("p");                //創立一個p元素，準備放系統日期
+
+                
+                NicknameElement.textContent = NicknameContent + "：";         //將NicknameContent裡的textarea內容放到NicknameElement裡的b元素(用戶輸入的暱稱)
+                postsContainer.appendChild(NicknameElement);                  //再將NicknameElement裡的pre元素(用戶輸入的內容)作為postsContainer裡的div元素(顯示區)的子標籤
+
+                postElement.textContent = postContent;                        //將postContent裡的textarea內容放到postElement裡的pre元素(用戶輸入的內容)
+                postsContainer.appendChild(postElement);                      //再將postElement裡的pre元素(用戶輸入的內容)作為postsContainer裡的div元素(顯示區)的子標籤
+
+                DateElement.textContent = StringDate;                         //將系統日期字串放入p元素
+                postsContainer.appendChild(DateElement);                      //將p元素放入div(顯示區)
+                
+                //將暱稱與內容輸入欄都清空
+                document.getElementById("nickname").value = "";
+                document.getElementById("postContent").value = "";
+            }
+        }
+    </script>
+</body>
+</html>

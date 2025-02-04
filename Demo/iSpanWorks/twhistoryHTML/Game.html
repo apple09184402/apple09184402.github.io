@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        #Question {
+            font-size: 170%;
+        }
+        button {
+            cursor: pointer;
+            font-size: 200%;
+            margin-top: 20px;
+            padding: 5px;
+            border-radius: 50px;
+            background-color: #F0E68C;
+        }
+
+        button:hover{
+            box-shadow: 0px 0px 25px gold;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>白色恐怖問答遊戲</h1>
+    <br>
+    <div id="game_container">
+        <h2 id="Question"></h2>
+        <div id="options_container"></div>
+    </div>
+    
+    <script>
+
+        //宣告一個陣列存放題目和選項，每個題目+選項都是一個物件
+        const questions = [
+            {
+                question: "第一個問題：請問你的爸爸媽媽，以及兄弟姊妹在做什麼？",
+                options: ["(A)我媽媽是律師", "(B)我爸爸是醫生", "(C)我的哥哥姊姊都是大學生", "(D)我沒有父母，沒有兄弟姊妹"],
+                trueAnswer: 3
+            }
+            ,
+            {
+                question: "第二個問題：你喜歡看什麼類型的書？",
+                options: ["(A)我都看小說", "(B)我都看報紙雜誌", "(C)我不識字", "(D)我都看社會學的書"],
+                trueAnswer: 2
+            }
+            ,
+            {
+                question: "第三個問題：你過去有沒有參加過任何活動以及集會？",
+                options: ["(A)我去大學聽過演講", "(B)沒有，我都關在家", "(C)我去過讀書會", "(D)我去過吳三連、李源棧、許世賢的造勢活動"],
+                trueAnswer: 1
+            }
+            ,
+            {
+                question: "第四個問題：你有沒有去過大陸地區？",
+                options: ["(A)沒有", "(B)現在又去不了！", "(C)什麼大陸，你是說中國？", "(D)什麼時候你們政府才會讓我們返鄉探親？"],
+                trueAnswer: 0
+            }
+            ,
+            {
+                question: "第五個問題：你有沒有聽過美麗島雜誌社？",
+                options: ["(A)有啊！", "(B)很有名的雜誌社", "(C)我有他們的刊物", "(D)什麼雜誌社？沒有聽過！"],
+                trueAnswer: 3
+            }
+            ,
+            {
+                question: "第六個問題：你認識施明德嗎？",
+                options: ["(A)認識啊！", "(B)我跟他很熟", "(C)沒聽過啦！他誰？", "(D)他住我隔壁"],
+                trueAnswer: 2
+            }
+            ,
+            {
+                question: "第七個問題：那麼黃信介、林弘宣、林義雄你認不認識？",
+                options: ["(A)我都認識啊！", "(B)一個都沒聽過啦！", "(C)我跟他們都很熟", "(D)有一個好像住我隔壁"],
+                trueAnswer: 1
+            }
+            ,
+            {
+                question: "第八個問題：姚嘉文、呂秀蓮、張俊宏、陳菊你有聽過嗎？",
+                options: ["(A)沒有聽過啦！", "(B)好像有聽過", "(C)有聽過但不熟", "(D)你找他們做什麼？"],
+                trueAnswer: 0
+            }
+            ,
+            {
+                question: "最後，你有沒有問題想要問我？",
+                options: ["(A)沒有", "(B)我的爸爸上禮拜去大學教課後就沒回來，你知道他去哪裡了嗎？", "(C)你們是不是把我爸爸抓走了？", "(D)你們也要抓我嗎？"],
+                trueAnswer: 0
+            }
+        ];
+          
+        let currentQuestionIndex = 0; //宣告變數，存放目前第?題
+        
+        //宣告顯示問題的函式
+        function displayQuestion() {
+            const questionElement = document.getElementById("Question"); //將h2(題目)放入變數questionElement
+            const optionsContainer = document.getElementById("options_container"); //將div(預計放入四個選項的容器)放入變數optionsContainer
+            const currentQuestion = questions[currentQuestionIndex]; //將陣列中的第?題物件放入變數currentQuestion
+        
+            questionElement.textContent = currentQuestion.question;//將變數currentQuestion裡的物件中的第?題題目，用textContent寫入變數questionElement裡的h1標題            
+            optionsContainer.innerHTML = ""; // 清空變數optionsContainer的四個選項
+            
+            
+            //forEach()：為每個元素都執行一次函數
+            //forEach(函式(目前被處理的陣列元素值, 目前處理第?個元素), thisArg?)
+            //將每個options元素變成button
+            currentQuestion.options.forEach(
+                function(option, index)
+                {
+                const button = document.createElement("button"); // 創建一個新的button
+                button.textContent = option;                     // 將目前forEach處理的陣列元素值(也就是options選項)放入button
+                button.onclick = function(){choiceAnswer(index)};// 設定點選button執行函式choiceAnswer，並傳入index(目前點選的第?個選項)
+                optionsContainer.appendChild(button);            // 將button放入optionsContainer裡的div(四個選項的容器)，變成div的子元素
+                
+                // 將四個選項換行
+                var BR = document.createElement("br")            
+                optionsContainer.appendChild(BR);
+                }
+            );
+        }
+
+        //宣告 "點選答案，並驗證答案是否正確" 的函式
+        function choiceAnswer(selectedIndex) {
+            const currentQuestion = questions[currentQuestionIndex]; //將陣列中的第?題物件放入變數currentQuestion
+            
+            //如果index(用戶點選的第?個選項)等於trueAnswer，回傳你答對了
+            //否則回傳答錯，並執行重設遊戲的函式
+            if (selectedIndex === currentQuestion.trueAnswer) {
+                alert("很好");
+            } 
+            else {
+                alert("我懷疑你是匪諜，請你跟我走一趟");
+                setTimeout(function () { resetGame(); }, 0); //用setTimeout防止alert與重設遊戲同時執行
+                return; //防止函式繼續向下執行
+            }
+          
+            //移動到下一個問題
+            currentQuestionIndex++;
+
+            //如果第?題+1大於陣列裡的題目數，就讓遊戲結束並重設遊戲
+            if (currentQuestionIndex + 1 > questions.length) {
+                alert("我問完了，恭喜你又多了一天自由");
+                setTimeout(function () { resetGame(); }, 0);
+            }
+            else {
+                displayQuestion();
+            }
+
+            
+            
+        }
+        
+        // 宣告重設遊戲的函式
+        function resetGame() {
+            currentQuestionIndex = 0; // 將第?題的?設為0
+            displayQuestion();        // 再執行函式displayQuestion
+        }
+
+        // 執行顯示問題的函式
+        displayQuestion();
+        
+      </script>
+</body>
+</html>

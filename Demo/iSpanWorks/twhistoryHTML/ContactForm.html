@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        label {
+            font-size: 24px;
+        }
+
+        input {
+            height: 24px;
+            width: 20%;
+        }
+        input[type="submit"] {
+            font-size: 16px;
+            
+        }
+
+        #telephone {
+            margin-top: 2px;
+        }
+
+
+    </style>
+    
+</head>
+<body>
+    <form action="FinishContactForm.html">
+            <label for="Name">您的姓名：</label>
+            <br>
+            <input id="Name" type="text" placeholder="請填入您的大名" required>
+            <br><br>
+            <label for="cellphone,telephone">您的聯絡電話：</label>
+            <br>
+            <input id="cellphone" type="tel" placeholder="請使用 - 區隔市話區碼或手機前四碼(09XX)" pattern="[0-9]{1,4}-[0-9]{1,8}">
+            <br><br>
+            <label for="EMAIL" required>您的聯絡信箱：</label>
+            <br>
+            <input id="EMAIL" type="email" placeholder="請填入您的電子信箱">
+            <br><br>
+            <label for="suggestion">對於野餐桌上的台灣史，您有什麼改進建議？：</label>
+            <br>
+            <textarea id="suggestion" cols="30" rows="10" placeholder="必填" required></textarea>
+            <br><br>
+            <input type="submit" value="提交">
+
+    </form>
+</body>
+</html>

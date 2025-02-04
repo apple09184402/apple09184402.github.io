@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>windowRight</title>
+    <style>
+
+        h1,div {
+            text-align: center;
+        }
+        div {
+            font-size: 24px;
+        }
+        iframe {
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>野餐桌上的台灣史</h1>
+    <div id="output"></div>
+    <iframe id="youtubeFrame" width="560" height="315" style="display: none;" src="https://www.youtube.com/embed/la3EBXnFfJ4?si=Epssm-6Qy2pTgWPz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+    <script>
+        var textArray = [
+            "歡迎來到野餐桌上的台灣史，這裡是介紹台灣歷史的網站。",
+            "我相信在螢幕前的讀者，從小就有在課堂學習過台灣的歷史。",
+            "但是，直到今天，各位還記得多少台灣的歷史？",
+            "我認為：我們出生在這塊土地，無論身分認同為何，都必須知道這塊土地曾經發生過什麼事情。",
+            "以銅為鏡，可以正衣冠。",
+            "以史為鏡，可以知興替。",
+            "以人為鏡，可以明得失。"
+        ];
+
+        var currentIndex = 0; // 第幾行文字
+        var outputElement = document.getElementById("output"); // 將id為output的div元素內容放入變數outputElement
+        var youtubeFrame = document.getElementById("youtubeFrame");
+        
+        var intervalId = setInterval(function() { //將函式setInterval放入變數intervalId
+
+            outputElement.innerHTML += textArray[currentIndex] + "<br>"; //將textArray[0]放入變數outputElement，複寫outputElement原本的內容
+  
+            currentIndex++; //將第0行文字+1
+
+            if (currentIndex === textArray.length) {
+                    clearInterval(intervalId); //如果第0+n行文字等於陣列內字串的個數，清除變數intervalId
+                    youtubeFrame.style.display = "block"; //令變數裡的ID為youtubeFrame的iframe標籤顯示
+                }
+        }, 1500);
+    
+        
+    </script>
+        
+        
+        
+        
+    
+    
+
+</body>
+</html>
